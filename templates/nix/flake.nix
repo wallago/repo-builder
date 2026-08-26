@@ -143,7 +143,7 @@
 
             # ── Checks (nix flake check) ─────────────────────────────
             checks.check = self.packages.${system}.{name}-debug;
-            # {if:endrust}
+            # {endif:rust}
 
             # ── Dev Shell (nix develop) ──────────────────────────────
             devShells.default = pkgs.mkShell {
