@@ -1,3 +1,5 @@
+use std::time::Instant;
+
 use tui_input::{Input, backend::crossterm::EventHandler};
 
 use crate::{
@@ -19,6 +21,12 @@ impl State {
                     FormFocus::Name => self.repo.name = self.input.value().to_string(),
                     FormFocus::Desc => self.repo.desc = self.input.value().to_string(),
                     FormFocus::Options | FormFocus::Preset => {}
+                }
+                if self.form_focus == FormFocus::Owner
+                    || self.form_focus == FormFocus::Name
+                    || self.form_focus == FormFocus::Desc
+                {
+                    self.last_blink = Instant::now();
                 }
             }
             InputCommand::Enter => {

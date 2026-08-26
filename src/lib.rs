@@ -65,6 +65,8 @@ fn start_tui(args: &Args, config: Config) -> Result<()> {
         state.tick_toasts();
         // Render the user interface.
         tui.draw(&mut state)?;
+        // Blink cursor
+        state.cursor_active = state.last_blink.elapsed().as_millis() % 1000 < 500;
         // Handle events.
         match tui.events.next()? {
             Event::Key(key_event) => {

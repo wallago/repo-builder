@@ -44,6 +44,10 @@ pub struct State {
     pub form_focus: form::FormFocus,
     /// Input.
     pub input: Input,
+    /// Is cursor is active.
+    pub cursor_active: bool,
+    /// Last blink.
+    pub last_blink: Instant,
     /// Screen mode.
     pub screen_mode: screen::Screen,
     /// List of options.
@@ -96,6 +100,8 @@ impl State {
             screen_mode: screen::Screen::Form,
             option_list: ListState::default().with_selected(Some(0)),
             keybindings: config.keybindings,
+            last_blink: Instant::now(),
+            cursor_active: false,
             toast: None,
             toast_expires_at: None,
             staged_list: ListState::default().with_selected(Some(0)),

@@ -39,6 +39,7 @@ pub(super) fn render_form(state: &mut State, frame: &mut Frame, rect: Rect) {
         &state.repo.owner,
         state.form_focus == FormFocus::Owner,
         state.screen_mode == Screen::Editing,
+        state.cursor_active,
     );
     render_input(
         frame,
@@ -47,6 +48,7 @@ pub(super) fn render_form(state: &mut State, frame: &mut Frame, rect: Rect) {
         &state.repo.name,
         state.form_focus == FormFocus::Name,
         state.screen_mode == Screen::Editing,
+        state.cursor_active,
     );
     render_input(
         frame,
@@ -55,6 +57,7 @@ pub(super) fn render_form(state: &mut State, frame: &mut Frame, rect: Rect) {
         &state.repo.desc,
         state.form_focus == FormFocus::Desc,
         state.screen_mode == Screen::Editing,
+        state.cursor_active,
     );
     render_presets(state, frame, preset, state.form_focus == FormFocus::Preset);
     render_options(

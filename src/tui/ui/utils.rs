@@ -24,6 +24,7 @@ pub(crate) fn render_input(
     value: &str,
     focused: bool,
     is_editable: bool,
+    cursor_active: bool,
 ) {
     let title = format!(" {title} ").fg(Color::Gray).bold();
     let mut block = Block::bordered().title(title);
@@ -32,5 +33,11 @@ pub(crate) fn render_input(
     } else if focused && is_editable {
         block = block.border_style(Color::Green);
     }
-    frame.render_widget(Paragraph::new(value).block(block), rect);
+    let cursor = if is_editable && focused && cursor_active {
+        "█"
+    } else {
+        " "
+    };
+    let body = format!("{value}{cursor}");
+    frame.render_widget(Paragraph::new(body).block(block), rect);
 }
