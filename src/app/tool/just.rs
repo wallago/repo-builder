@@ -1,7 +1,12 @@
 use std::path::Path;
 
+use include_dir::{Dir, include_dir};
+
 use crate::app::{RepoBuilder, Tool, tool::category::Category};
 use crate::prelude::*;
+
+/// Just file templates path.
+static JUST: Dir<'_> = include_dir!("$CARGO_MANIFEST_DIR/templates/just");
 
 /// Task runner recipes: check, lint, fmt, ci.
 #[derive(Debug)]
@@ -25,8 +30,7 @@ impl Tool for Just {
     }
 
     fn gen_template(&self, root: &Path, repo: &RepoBuilder) -> Result<()> {
-        let content = substitute(include_str!("../../../templates/justfile"), repo);
-        write_entry(root, "justfile", &content)?;
+        write_dir(&JUST, root, repo)?;
         Ok(())
     }
 }
