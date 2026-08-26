@@ -10,27 +10,49 @@
       "Bash(jj log*)",
       "Bash(jj diff*)",
       "Bash(jj show*)",
-      "{if:justfile}Bash(just*)",
-      "{if:flake}Bash(nix flake check*)",
-      "{if:flake}Bash(nix eval*)",
-      "{if:flake}Bash(nix build --dry-run*)",
-      "{if:flake}Bash(nix search nixpkgs*)",
-      "{if:flake}Bash(statix check*)",
-      "{if:flake}Bash(deadnix*)",
-      "{if:flake}Bash(nixfmt*)",
-      "{if:rust}Bash(cargo check*)",
-      "{if:rust}Bash(cargo fmt*)",
-      "{if:rust}Bash(cargo nextest run*)",
-      "{if:rust}Bash(cargo test*)",
-      "{if:rust}Bash(cargo tree*)",
-      "{if:clippy}Bash(cargo clippy*)",
-      "{if:machete}Bash(cargo machete*)",
-      "{if:deny}Bash(cargo deny check*)",
-      "{if:audit}Bash(cargo audit*)",
-      "{if:taplo}Bash(taplo*)",
-      "{if:typos}Bash(typos*)",
-      "{if:committed}Bash(committed*)",
-      "{if:cliff}Bash(git cliff*)"
+      {if:justfile}
+      "Bash(just*)",
+      {endif:justfile}
+      {if:flake}
+      "Bash(nix flake check*)",
+      "Bash(nix eval*)",
+      "Bash(nix build --dry-run*)",
+      "Bash(nix search nixpkgs*)",
+      "Bash(statix check*)",
+      "Bash(deadnix*)",
+      "Bash(nixfmt*)",
+      {endif:flake}
+      {if:rust}
+      "Bash(cargo check*)",
+      "Bash(cargo fmt*)",
+      "Bash(cargo nextest run*)",
+      "Bash(cargo test*)",
+      "Bash(cargo tree*)",
+      {endif:rust}
+      {if:clippy}
+      "Bash(cargo clippy*)",
+      {clippyif:clippy}
+      {if:machete}
+      "Bash(cargo machete*)",
+      {endif:machete}
+      {if:deny}
+      "Bash(cargo deny check*)",
+      {endif:deny}
+      {if:audit}
+      "Bash(cargo audit*)",
+      {endif:audit}
+      {if:taplo}
+      "Bash(taplo*)",
+      {endif:taplo}
+      {if:typos}
+      "Bash(typos*)",
+      {endif:typos}
+      {if:committed}
+      "Bash(committed*)",
+      {endif:committed}
+      {if:cliff}
+      "Bash(git cliff*)"
+      {endif:cliff}
     ],
     "deny": [
       "Bash(git push*)",
@@ -46,13 +68,19 @@
       "Bash(jj bookmark*)",
       "Bash(gh pr create*)",
       "Bash(gh release*)",
-      "{if:rust}Bash(cargo publish*)",
-      "{if:justfile}Bash(just publish*)",
+      {if:rust}
+      "Bash(cargo publish*)",
+      {endif:rust}
+      {if:justfile}
+      "Bash(just publish*)",
+      {endif:justfile}
       "Read(./.env)",
       "Read(./.env.*)",
       "Read(./**/.env)",
       "Read(./secrets/**)",
-      "{if:envrc}Read(./.direnv/**)"
+      {if:envrc}
+      "Read(./.direnv/**)"
+      {endif:envrc}
     ]
   }
 }
