@@ -136,7 +136,7 @@ fn marker_tool<'a>(line: &'a str, marker: &str) -> Option<&'a str> {
 /// keeping the body of the ones whose tool is. The marker lines themselves are
 /// removed either way.
 fn strip_conditionals(content: &str, repo: &RepoBuilder) -> String {
-    if !content.contains(IF_MARKER) || !content.contains(IFNOT_MARKER) {
+    if !content.contains(IF_MARKER) && !content.contains(IFNOT_MARKER) {
         return content.to_string();
     }
     let mut out = String::with_capacity(content.len());
@@ -147,14 +147,12 @@ fn strip_conditionals(content: &str, repo: &RepoBuilder) -> String {
                 skipping = None;
             }
             continue;
-        }
-        if let Some(tool) = marker_tool(line, IF_MARKER) {
+        } else if let Some(tool) = marker_tool(line, IF_MARKER) {
             if skipping.is_none() && !repo.is_selected(tool) {
                 skipping = Some(tool);
             }
             continue;
-        }
-        if let Some(tool) = marker_tool(line, IFNOT_MARKER) {
+        } else if let Some(tool) = marker_tool(line, IFNOT_MARKER) {
             if skipping.is_none() && repo.is_selected(tool) {
                 skipping = Some(tool);
             }
