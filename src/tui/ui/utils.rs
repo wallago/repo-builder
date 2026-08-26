@@ -38,6 +38,19 @@ pub(crate) fn render_input(
     } else {
         " "
     };
-    let body = format!("{value}{cursor}");
+
+    // Width available inside the border.
+    let width = rect.width.saturating_sub(2) as usize;
+
+    // Keep the cursor visible by shifting the start of the string.
+    let start = if value.len() >= width {
+        value.len() - width + 1
+    } else {
+        0
+    };
+
+    let visible = &value[start..];
+
+    let body = format!("{visible}{cursor}");
     frame.render_widget(Paragraph::new(body).block(block), rect);
 }
